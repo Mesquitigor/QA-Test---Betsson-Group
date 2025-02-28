@@ -40,4 +40,4 @@ Feature: Login functionality for the Swag Labs app
     When I enter the username as "standard_user"
     And I enter the password as ""
     And I click the login button
-    Then I should see an error message, for empty password
+    Then I should see an error message

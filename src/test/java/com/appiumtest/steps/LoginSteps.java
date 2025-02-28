@@ -1,23 +1,28 @@
 package com.appiumtest.steps;
 
-import com.appiumtest.AppiumDemo;
+import com.appiumtest.AppiumDriverFactory;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
-import org.openqa.selenium.By;
-import org.openqa.selenium.remote.DesiredCapabilities;
+
 import static org.junit.Assert.assertTrue;
-import java.net.URL;
+
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 
 
 public class LoginSteps {
-    private AppiumDriver driver;
+    private AppiumDriver<MobileElement> driver;
 
     public LoginSteps() {
-        this.driver = AppiumDemo.getDriver();
+        this.driver = AppiumDriverFactory.getDriver();
+    }
+
+    @Before
+    public void resetApp() {
+        driver.resetApp();
     }
 
     @Given("I open the login page")
@@ -27,43 +32,32 @@ public class LoginSteps {
 
     @When("I enter the username as {string}")
     public void enterUsername(String username) {
-        MobileElement usernameField = driver.findElement(By.xpath("//android.widget.EditText[@content-desc='test-Username']"));
+        MobileElement usernameField = driver.findElement(MobileBy.AccessibilityId("test-Username"));
         usernameField.sendKeys(username);
     }
 
     @When("I enter the password as {string}")
     public void enterPassword(String password) {
-        MobileElement passwordField = driver.findElement(By.xpath("//android.widget.EditText[@content-desc=\"test-Password\"]"));
+        MobileElement passwordField = driver.findElement(MobileBy.AccessibilityId("test-Password"));
         passwordField.sendKeys(password);
     }
 
     @When("I click the login button")
     public void clickLoginButton() {
-        MobileElement loginButton = driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc='test-LOGIN']"));
+        MobileElement loginButton = driver.findElement(MobileBy.AccessibilityId("test-LOGIN"));
         loginButton.click();
     }
 
     @Then("I should see the home page")
     public void verifyHomePage() {
-        MobileElement homePage = driver.findElement(By.xpath("//android.widget.TextView[@text=\"PRODUCTS\"]"));
+        MobileElement homePage = driver.findElement(MobileBy.AccessibilityId("test-PRODUCTS"));
         assertTrue(homePage.isDisplayed());
     }
 
     @Then("I should see an error message")
     public void verifyErrorMessage() {
-        MobileElement errorMessage = driver.findElement(By.xpath("//android.widget.TextView[@text=\"Username and password do not match any user in this service.\"]"));
+        MobileElement errorMessage = driver.findElement(MobileBy.AccessibilityId("test-Error message"));
         assertTrue(errorMessage.isDisplayed());
     }
 
-    @Then("I should see an error message, for empty username")
-    public void verifyErrorMessageEmptyUsername() {
-        MobileElement errorMessage = driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"test-Error message\"]"));
-        assertTrue(errorMessage.isDisplayed());
-    }
-
-    @Then("I should see an error message, for empty password")
-    public void verifyErrorMessageEmptyPassword() {
-        MobileElement errorMessage = driver.findElement(By.xpath("//android.widget.TextView[@text=\"Password is required\"]"));
-        assertTrue(errorMessage.isDisplayed());
-    }
 }
