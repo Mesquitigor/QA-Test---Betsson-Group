@@ -46,6 +46,12 @@ public class ShoppingSteps {
 
     @Given("I have a product in the cart")
     public void iHaveAProductInTheCart() {
+        LoginSteps loginSteps = new LoginSteps();
+        loginSteps.enterUsername("standard_user");
+        loginSteps.enterPassword("secret_sauce");
+        loginSteps.clickLoginButton();
+        iAddTheProductToTheCart();
+        theCartBadgeShouldShow();
         MobileElement cartItem = driver.findElement(MobileBy.AccessibilityId("test-Item"));
         assertTrue(cartItem.isDisplayed());
     }
@@ -75,6 +81,13 @@ public class ShoppingSteps {
 
     @Given("I am on the checkout information page")
     public void iAmOnTheCheckoutInformationPage() {
+        LoginSteps loginSteps = new LoginSteps();
+        loginSteps.enterUsername("standard_user");
+        loginSteps.enterPassword("secret_sauce");
+        loginSteps.clickLoginButton();
+        iAddTheProductToTheCart();
+        theCartBadgeShouldShow();
+        iClickOnTheCheckoutButton();
         MobileElement checkoutPage = driver.findElement(MobileBy.AccessibilityId("test-CHECKOUT: OVERVIEW"));
         checkoutPage.isDisplayed();
     }
@@ -93,7 +106,7 @@ public class ShoppingSteps {
         finishButton.click();
     }
 
-    @Then("I should see the confirmation message {string}")
+    @Then("I should see the confirmation message")
     public void iShouldSeeTheConfirmationMessage(String expectedMessage) {
         MobileElement confirmationMessage = driver.findElement(By.xpath("//android.widget.TextView[@text=\"THANK YOU FOR YOU ORDER\"]"));
         Assert.assertEquals("Thank you for your order", expectedMessage, confirmationMessage.getText());
