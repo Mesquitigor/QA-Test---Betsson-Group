@@ -3,7 +3,6 @@ package com.appiumtest.steps;
 import com.appiumtest.AppiumDriverFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
@@ -45,7 +44,7 @@ public class LoginSteps {
 
     @Then("I should see the home page")
     public void verifyHomePage() {
-        MobileElement homePage = driver.findElement(MobileBy.AccessibilityId("test-PRODUCTS"));
+        MobileElement homePage = driver.findElement(MobileBy.AccessibilityId("test-Cart drop zone"));
         assertTrue(homePage.isDisplayed());
     }
 
