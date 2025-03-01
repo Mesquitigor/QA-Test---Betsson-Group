@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import io.cucumber.java.Before;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -37,7 +38,10 @@ public class AppiumDriverFactory {
         }
         return driver;
     }
-
+    @Before
+    public void resetApp() {
+        driver.resetApp();
+    }
     public static void quitDriver() {
         if (driver != null) {
             driver.quit();

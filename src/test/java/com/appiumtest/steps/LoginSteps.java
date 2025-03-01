@@ -20,11 +20,6 @@ public class LoginSteps {
         this.driver = AppiumDriverFactory.getDriver();
     }
 
-    @Before
-    public void resetApp() {
-        driver.resetApp();
-    }
-
     @Given("I open the login page")
     public void openLoginPage() {
         System.out.println("Open app.");
@@ -60,4 +55,28 @@ public class LoginSteps {
         assertTrue(errorMessage.isDisplayed());
     }
 
+    @Then("I click to add some item to cart")
+    public void addBackPack() {
+        MobileElement addToCart = driver.findElement(MobileBy.AccessibilityId("test-ADD TO CART"));
+        addToCart.click();
+        MobileElement removeFromCart = driver.findElement(MobileBy.AccessibilityId("test-REMOVE"));
+        assertTrue(removeFromCart.isDisplayed());
+    }
+
+    @Then("I can not add another item to cart")
+    public void canNotAddAnotherItem() {
+        MobileElement addButton = driver.findElement(MobileBy.AccessibilityId("test-ADD TO CART"));
+        addButton.click();
+        MobileElement removeButton = driver.findElement(MobileBy.AccessibilityId("test-REMOVE"));
+        assertTrue(removeButton.isDisplayed());
+        assertTrue(addButton.isDisplayed());
+    }
+    @Then("I can not remove item from cart")
+    public void canNotRemoveItem() {
+        MobileElement addButton = driver.findElement(MobileBy.AccessibilityId("test-ADD TO CART"));
+        MobileElement removeButton = driver.findElement(MobileBy.AccessibilityId("test-REMOVE"));
+        removeButton.click();
+        assertTrue(removeButton.isDisplayed());
+        assertTrue(addButton.isDisplayed());
+    }
 }
